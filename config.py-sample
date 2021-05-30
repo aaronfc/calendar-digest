@@ -1,0 +1,4 @@
+CALENDAR_ICS_URL = 'https://calendar.google.com/calendar/ical/...'
+RECIPIENT = 'recipient @ gmail.com'
+SENDER = 'sender @ gmail.com'
+DAYS = 14
