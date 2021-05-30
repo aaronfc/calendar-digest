@@ -1,4 +1,4 @@
-mkdir build
+mkdir -p build
 pipenv lock -r > ./build/requirements.txt
 cp *.py build
 docker run --rm -v ${PWD}/build:/var/task \
