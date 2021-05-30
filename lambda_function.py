@@ -7,9 +7,6 @@ import boto3
 from botocore.exceptions import ClientError
 from config import CALENDAR_ICS_URL, RECIPIENT, SENDER, DAYS
 
-# Testing
-SEND_EMAIL = True
-
 # Reading calendar and extracting events
 gcal = Calendar.from_ical(requests.get(CALENDAR_ICS_URL).text)
 
@@ -110,7 +107,4 @@ def lambda_handler(event, context):
     }
 
 if __name__ == "__main__":
-    if SEND_EMAIL:
-        send_email(SENDER, RECIPIENT, body)
-    else:
-        print(body)
+    lambda_handler({}, {})
