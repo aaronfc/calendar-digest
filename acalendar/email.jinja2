@@ -1,0 +1,12 @@
+<html>
+	<head></head>
+	<body>
+		<h1>📅 weekly digest</h1>
+		{% for day in events_per_day %}
+			<h2>{{ day }}</h2>
+			{% for event in events_per_day[day] %}
+				<p>{{event.time}}: {{event.summary}}</p>
+			{% endfor %}
+		{% endfor %}
+	</body>
+</html>
