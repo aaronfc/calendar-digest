@@ -7,6 +7,7 @@ name = "pypi"
 icalendar = "*"
 requests = "*"
 boto3 = "*"
+recurring-ical-events = "*"
 
 [requires]
 python_version = "3.8"

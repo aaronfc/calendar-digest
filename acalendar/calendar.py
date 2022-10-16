@@ -1,4 +1,5 @@
 from icalendar import Calendar, Event
+import recurring_ical_events
 import requests
 import datetime
 import pytz
@@ -9,11 +10,11 @@ def get_events(ics_url, days):
 
     present = datetime.date.today()
     localtz = pytz.timezone('Europe/Madrid')
-
     d = datetime.timedelta(days)
 
+    # Using `recurring_ical_events` so that recurring events are correctly parsed.
     events = []
-    for component in gcal.walk():
+    for component in recurring_ical_events.of(gcal).between(present, present + d):
         if component.name == "VEVENT":
             dtstart = component.get('dtstart').dt
             dtend = None
