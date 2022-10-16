@@ -1,5 +1,5 @@
 mkdir -p build
-pipenv lock -r > ./build/requirements.txt
+pipenv requirements > ./build/requirements.txt
 cp -r *.py acalendar/ build # Need a better way to get all the relevant files
 rm build/acalendar/*.pyc # Workaround to remove *.pyc files
 docker run --rm -v ${PWD}/build:/var/task \
