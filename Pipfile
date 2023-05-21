@@ -13,3 +13,4 @@ recurring-ical-events = "*"
 python_version = "3.8"
 
 [dev-packages]
+pylint = "*"

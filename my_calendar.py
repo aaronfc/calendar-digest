@@ -14,7 +14,7 @@ def get_events(ics_url, days):
 
     # Using `recurring_ical_events` so that recurring events are correctly parsed.
     events = []
-    for component in recurring_ical_events.of(gcal).between(present, present + d):
+    for component in recurring_ical_events.of(gcal, keep_recurrence_attributes=True).between(present, present + d):
         if component.name == "VEVENT":
             dtstart = component.get('dtstart').dt
             dtend = None
@@ -32,6 +32,17 @@ def get_events(ics_url, days):
 
             if dtend != None and dtend >= present:
                 if dtstart >= present and dtstart <= present + d:
+                    # Skip some recurrent events
+                    if 'rrule' in component:
+                        frequency = component.get('rrule').get('freq')
+                        # Skip daily events - we are not interested in them.
+                        if 'DAILY' in frequency:
+                            continue
+                        # Skip weekly events (and only _purely_ weekly events)
+                        if 'WEEKLY' in frequency:
+                            # But not if they are not really weekly (bi-weekly or so)
+                            if 'interval' not in component.get('rrule'):
+                                continue
                     events.append({
                         "summary": component.get('summary'),
                         "start_date": dtstart,
@@ -50,5 +61,5 @@ def get_events(ics_url, days):
 
 if __name__ == "__main__":
     from config import CALENDAR_ICS_URL, DAYS
-    import pprint
+    from pprint import pprint
     pprint(get_events(CALENDAR_ICS_URL, DAYS))
